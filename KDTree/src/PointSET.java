@@ -1,6 +1,8 @@
+import java.util.Iterator;
 import java.util.Stack;
 import java.util.TreeSet;
 
+import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 /*
  * Brute-force implementation.
@@ -24,22 +26,33 @@ public class PointSET {
    }
    public void insert(Point2D p)              // add the point to the set (if it is not already in the set)
    {
+     if(p==null)
+       throw new java.lang.NullPointerException();
      this.balancedSearchTree.add(p);
    }
    public boolean contains(Point2D p)            // does the set contain point p?
    {
+     if(p==null)
+       throw new java.lang.NullPointerException();
      return this.balancedSearchTree.contains(p);
    }
    public void draw()                         // draw all points to standard draw
    {
-     System.out.println("Implement draw");
+     Iterator<Point2D> iter = balancedSearchTree.iterator();
+     while(iter.hasNext())
+       iter.next().draw();     
    }
+    
    public Iterable<Point2D> range(RectHV rect)             // all points that are inside the rectangle
    {
+     if(rect==null)
+       throw new java.lang.NullPointerException();
      Stack<Point2D> iterableStack = new Stack<Point2D>();
-     while(balancedSearchTree.iterator().hasNext())
+     Iterator<Point2D> iter = balancedSearchTree.iterator();    
+       
+      while(iter.hasNext())
      {
-       Point2D point = this.balancedSearchTree.iterator().next();
+       Point2D point = iter.next();
        if(isPointWithinRange(point,rect))
          iterableStack.push(point);
      }
@@ -47,17 +60,25 @@ public class PointSET {
    }
    private boolean isPointWithinRange(Point2D p, RectHV rect) 
    {
+     if(p==null||rect==null)
+       throw new java.lang.NullPointerException();
+     
      if(p.x()>rect.xmax()||p.x()<rect.xmin()) return false;
      if(p.y()>rect.ymax()||p.y()<rect.ymin()) return false;
     return true;
    }
   public Point2D nearest(Point2D p)             // a nearest neighbor in the set to point p; null if the set is empty
   {
+    if(p==null)
+      throw new java.lang.NullPointerException();
+    
     Point2D nearestPoint=null;
     double distanceFromNearest= Double.POSITIVE_INFINITY;
-    while(balancedSearchTree.iterator().hasNext())
-    {
-      Point2D point = this.balancedSearchTree.iterator().next();
+    Iterator<Point2D> iter = balancedSearchTree.iterator();    
+    
+    while(iter.hasNext())
+   {
+      Point2D point = iter.next();
       double distanceFromPoint = point.distanceTo(p);
       if(distanceFromPoint<distanceFromNearest)
         {
