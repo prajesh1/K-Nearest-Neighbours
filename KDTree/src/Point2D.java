@@ -1,3 +1,8 @@
+/*
+ * Class to represent x and y coordinates.
+ * It has functions to calculate Eucledian distances
+ * For this implementation, natural ordering first compare y coordinate then x;
+ */
 public class Point2D implements Comparable<Point2D> {
   
    private final double x;    // x coordinate
