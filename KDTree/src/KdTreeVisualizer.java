@@ -24,6 +24,12 @@ public class KdTreeVisualizer {
      //  PointSET kdtree = new PointSET();
         int j= 100;
         while (true) {
+          try {
+            Thread.sleep(100);
+          } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
           if (StdDraw.mousePressed()) {
                double x = StdDraw.mouseX();
                 double y = StdDraw.mouseY();
@@ -35,7 +41,7 @@ public class KdTreeVisualizer {
                 if (rect.contains(p)&&!kdtree.contains(p)) {
                     //StdOut.printf("%8.6f %8.6f\n", x, y);
                     kdtree.insert(p);
-                    System.out.println("called insert"+p.toString());
+                    System.out.println("called insert"+kdtree.size());
                     StdDraw.clear();
                     kdtree.draw();
                 }

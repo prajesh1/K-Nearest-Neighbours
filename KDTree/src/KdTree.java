@@ -134,7 +134,8 @@ public class KdTree {
          node = node.lb;
        else if(vertical==false&&node.p.y()<p.y())
          node = node.rt;
-       else return p.equals(node);
+       else if( p.equals(node)) return true;
+       else node = node.rt;
        vertical = !vertical;
      }
      return false;
@@ -176,7 +177,7 @@ public class KdTree {
    {
      if(node!=null&&rect.intersects(node.rect)) // Does given rectangle intersect with rectangle of node
      {
-       this.iterableStack.add(node.p);
+       if(rect.contains(node.p))this.iterableStack.add(node.p);
        this.rangeRecursiveSearch(rect, node.lb);
        this.rangeRecursiveSearch(rect, node.rt);  
      }
@@ -187,19 +188,19 @@ public class KdTree {
     if(this.isEmpty())
       return null;
     this.closestPointDiscoveredTillNow = root.p;
-    this.distanceToClosestPoint = p.distanceTo(this.closestPointDiscoveredTillNow);
+    this.distanceToClosestPoint = p.distanceSquaredTo(this.closestPointDiscoveredTillNow);
     recursiveNearestNeighbour(p,root);
     return this.closestPointDiscoveredTillNow;
   }
 
    private void recursiveNearestNeighbour(Point2D p, Node node)
    {
-     if(node!=null&&node.p.distanceTo(p)<this.distanceToClosestPoint)
+     if(node!=null&&node.p.distanceSquaredTo(p)<this.distanceToClosestPoint)
      {
        this.closestPointDiscoveredTillNow = node.p;
-       this.distanceToClosestPoint = node.p.distanceTo(p);
+       this.distanceToClosestPoint = node.p.distanceSquaredTo(p);
      }
-     if(node!=null&&node.rect.distanceTo(p)<=this.distanceToClosestPoint) // Is there any point in current rectangle 
+     if(node!=null&&node.rect.distanceTo(p)<this.distanceToClosestPoint) // Is there any point in current rectangle 
      {                                                     //nearer than current closestPoint
        this.recursiveNearestNeighbour(p, node.lb);
        this.recursiveNearestNeighbour(p, node.rt);
