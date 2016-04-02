@@ -25,8 +25,8 @@ public class NearestNeighborVisualizer {
 
         // initialize the two data structures with point from standard input
         PointSET brute = new PointSET();
-        //KdTree kdtree = new KdTree();
-        PointSET kdtree = new PointSET();
+        KdTree kdtree = new KdTree();
+       // PointSET kdtree = new PointSET();
         while (!in.isEmpty()) {
             double x = in.readDouble();
             double y = in.readDouble();
@@ -34,7 +34,7 @@ public class NearestNeighborVisualizer {
             kdtree.insert(p);
             brute.insert(p);
         }
-
+       // brute.draw();
         while (true) {
 
             // the location (x, y) of the mouse

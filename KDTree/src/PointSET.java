@@ -82,7 +82,7 @@ public class PointSET {
       double distanceFromPoint = point.distanceTo(p);
       if(distanceFromPoint<distanceFromNearest)
         {
-          distanceFromPoint=distanceFromNearest;
+          distanceFromNearest=distanceFromPoint;
           nearestPoint = point;
         }
     }
